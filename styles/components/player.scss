@@ -1,0 +1,35 @@
+.playerContainer {
+  position: relative;
+  width: 50px;
+  height: 300px;
+  background-color: #fdfdfd;
+
+  .spellName {
+    margin-left: 100px;
+    color: #fdfdfd;
+    white-space: nowrap;
+    text-transform: capitalize;
+  }
+
+  .spellSprite {
+    position: absolute;
+    left: 100px;
+    top: 50%;
+
+    &.attackSprite {
+      width: 150px;
+      height: 5px;
+      background-color: red;
+    }
+
+    &.errorMessage {
+      font-style: italic;
+      white-space: nowrap;
+      color: #fdfdfd;
+      opacity: 0.6;
+    }
+
+  }
+
+  
+}

@@ -1,0 +1,23 @@
+.fightSceneContainer {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #050022 0%, #0A0047 100%);
+
+  .playerWrapper {
+    position: absolute;
+    bottom: 40px;
+    left: 20%;
+    height: 500px;
+    width: 100px;
+    background-color: white;
+  }
+
+  .enemyWrapper {
+    position: absolute;
+    bottom: 40px;
+    right: 20%;
+    height: 500px;
+    width: 100px;
+    background-color: red;
+  }
+}

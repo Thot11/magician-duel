@@ -1,0 +1,9 @@
+@import './reset.scss';
+@import './globals.scss';
+
+// pages
+@import './pages/fightScene.scss';
+
+// components 
+@import './components/player.scss';
+@import './components/enemy.scss';
