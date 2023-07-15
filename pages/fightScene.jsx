@@ -1,9 +1,18 @@
 import Head from 'next/head'
+import styled from "styled-components"
 import Player from '../components/player'
 
 import { useEffect, useState, useCallback } from "react";
 import Enemy from '../components/enemy';
 import { player, enemy, spellList, element } from '../datas/spellList';
+
+// Type d'utilisation styled
+const FightSceneContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #050022 0%, #0A0047 100%);
+`;
+
 
 export default function FightScene() {
 
@@ -72,6 +81,7 @@ export default function FightScene() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* <FightSceneContainer> */}
       <main className='fightSceneContainer'>
         <div className="playerWrapper">
           <div className="spellName">{spellName}</div>
@@ -97,7 +107,8 @@ export default function FightScene() {
             <p>{playerTwo.windShield} <span>WS</span></p>
           </div>
         </div>
-      </main>
+      </main>  
+      {/* </FightSceneContainer> */}
 
       <footer >
       </footer>
