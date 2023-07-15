@@ -1,0 +1,46 @@
+.spellBookContainer {
+  width: 100vw;
+  height: 100vh;
+  padding: 64px;
+  background: linear-gradient(180deg, #050022 0%, #0A0047 100%);
+
+  .filters {
+    display: flex;
+
+    button {
+      margin-right: 16px;
+      padding: 16px 32px;
+      color: white;
+      border: 1px solid white;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &.filterActive {
+        background-color: white;
+        color: #0A0047;
+        border-color: white;
+      }
+
+      &.btnReinitialize {
+        border: 0;
+        color: red;
+        margin-left: 32px;
+      }
+    }
+
+    span {
+      width: 2px;
+      height: 50px;
+      background-color: white;
+      margin: 0 48px 0 32px;
+    }
+  }
+
+  .cardList {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    margin-top: 48px;
+  }
+}

@@ -11,12 +11,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main >
-        <Link href="/fightScene">
-          <a>
-            <button>{"Let's Fight !"}</button>
-          </a>
-        </Link>
+      <main className='home' >
+        <div className="menu">
+          <Link href="/fightScene">
+            <a>
+              <button>{"Duel"}</button>
+            </a>
+          </Link>
+          <Link href="/spellBook">
+            <a>
+              <button>{"Grimoire"}</button>
+            </a>
+          </Link>
+
+        </div>
       </main>
 
       <footer >

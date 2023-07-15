@@ -22,6 +22,22 @@ const spellList = {
     shield: 0,
     elementalShield: 0,
     attribut: 'water',
+  },
+  earthwave: {
+    name: 'earthwave',
+    type: 'attack',
+    damage: 6,
+    shield: 0,
+    elementalShield: 0,
+    attribut: 'earth',
+  },
+  windslash: {
+    name: 'windslash',
+    type: 'attack',
+    damage: 6,
+    shield: 0,
+    elementalShield: 0,
+    attribut: 'wind',
   }
 }
 

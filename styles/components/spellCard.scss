@@ -1,0 +1,47 @@
+.spellCardContainer {
+  width: 200px;
+  height: 200px;
+  padding: 4px;
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+
+  &.fireCardContainer {
+    background: linear-gradient(90deg, rgba(187,17,17,1) 0%, rgba(223,3,3,1) 74%);
+  }
+
+  &.waterCardContainer {
+    background: linear-gradient(90deg, rgba(110,118,255,1) 0%, rgba(146,155,255,1) 74%);
+  }
+
+  &.earthCardContainer {
+    background: linear-gradient(90deg, rgba(160,82,45,1) 0%, rgba(126,50,14,1) 74%);
+  }
+
+  &.windCardContainer {
+    background: linear-gradient(90deg, rgba(24,227,24,1) 0%, rgba(46,230,46,1) 74%);
+  }
+
+  .headerCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 8px;
+    border: 1px solid ghostwhite;
+    border-radius: 5px;
+  }
+
+  .spellStats {
+    font-size: 12px;
+
+    p {
+      margin-bottom: 8px;
+    }
+
+    span {
+      font-weight: 700;
+    }
+  }
+}
