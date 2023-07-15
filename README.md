@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
@@ -10,25 +8,24 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Concept de base
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Façon versus, 1v1 vue de côté
+Chaque joueur doit écrire ses spells pour les activer. Donc plus on écrit vite, plus vite on lance un sort. pas de temps de recharge
+Plus un sort est long, plus il est puissant
+Il y’a des spells d’attaque, de défense, de buff et débuff
+Chaque joueur à un grimoire dans lequel est recensé tous les sorts qu’il connaît
+Les joueurs commencent avec un set de sort défini et doivent découvrir/débloqués les autres au fur et à mesure
+On peut voler le sort d’un joueur si on le bat
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Le jeu repose sur trois pilier:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Le savoir: Accumulé le plus de sort possible
+La stratégie: savoir utiliser le bon sort au bon moment
+L'exécution: savoir lancer un sort le plus vite possible et sans faute
 
-## Learn More
+## Les sorts
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Les sorts existent dans 4 éléments: feu, eau, terre et vent 
+Il en existe 4 genres: attaque, défense, buff et débuff
+Chaque élément est + ou - efficace contre chaque élément feu > eau, terre > feu, etc

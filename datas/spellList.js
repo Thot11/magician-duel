@@ -9,23 +9,32 @@ const spellList = {
   },
   firewall: {
     name: 'firewall',
-    type: 'attack',
+    type: 'defense',
     damage: 0,
-    shield: 6,
+    shield: 3,
     elementalShield: 3,
     attribut: 'fire',
   },
   waterwave: {
     name: 'waterwave',
     type: 'attack',
-    damage: 0,
-    shield: 6,
+    damage: 6,
+    shield: 0,
     elementalShield: 0,
     attribut: 'water',
   }
 }
 
 const player = {
+  health: 50,
+  shield: 50,
+  fireShield: 0,
+  waterShield: 0,
+  windShield: 0,
+  earthShield: 0,
+  spellBook: spellList,
+}
+const enemy = {
   health: 50,
   shield: 50,
   fireShield: 0,
@@ -55,4 +64,4 @@ const element = {
 }
 
 
-export { spellList, player, element };
+export { spellList, player, element, enemy };

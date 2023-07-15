@@ -3,16 +3,16 @@ import Player from '../components/player'
 
 import { useEffect, useState, useCallback } from "react";
 import Enemy from '../components/enemy';
-import { player, spellList } from '../datas/spellList';
+import { player, enemy, spellList, element } from '../datas/spellList';
 
 export default function FightScene() {
 
   const playerOne = player;
-  const playerTwo = player;
+  const playerTwo = enemy;
 
   
   const [spellName, setSpellName] = useState('')
-  const [spellExecuted, setSpellExecuted] = useState('');
+  const [spellExecuted, setSpellExecuted] = useState({});
 
   const handleKeyPress = useCallback((e) => {
     if(e.key.length === 1) {
@@ -33,25 +33,34 @@ export default function FightScene() {
     };
   }, [handleKeyPress])
 
-  const attackPlayer = ({player, attribut, damage}) => {
-    const totalDamage = damage - (player.shield - player[`${attribut}Shield`]) > 0 ? damage - (player.shield - player[`${attribut}Shield`]) : 0;
+  const attackPlayer = ({victime, attribut, damage}) => {
+    const totalDamage = damage - (victime.shield - victime[`${attribut}Shield`]) > 0 ? damage - (victime.shield - victime[`${attribut}Shield`]) : 0;
     if (totalDamage > 0) {
-      if (player.shield > 0) {
-        player.health = player.health - (totalDamage - player.shield);
-        player.shield = 0;
+      if (victime.shield > 0) {
+        victime.health = victime.health - (totalDamage - victime.shield);
+        victime.shield = 0;
       }
       else {
-        player.health = player.health - totalDamage;
+        victime.health = victime.health - totalDamage;
       }
     }
     else {
-      player.shield -= damage;
+      victime.shield -= damage;
     }
+  }
+
+  const shieldUp = ({elementalShield, shield, attribut}) => {
+    playerOne.shield += shield;
+    playerOne[`${attribut}Shield`] += elementalShield;
+    playerOne[`${element[attribut].weakness}Shield`] -= elementalShield
   }
 
   useEffect(() => {
     if (spellExecuted?.type === 'attack') {
-      attackPlayer({player: playerTwo, attribut: spellExecuted.attribut, damage: spellExecuted.damage})
+      attackPlayer({victime: playerTwo, attribut: spellExecuted.attribut, damage: spellExecuted.damage})
+    }
+    if (spellExecuted?.type === 'defense') {
+      shieldUp({elementalShield: spellExecuted.elementalShield, attribut: spellExecuted.attribut, shield: spellExecuted.shield})
     }
   }, [spellExecuted])
 
@@ -65,23 +74,27 @@ export default function FightScene() {
 
       <main className='fightSceneContainer'>
         <div className="playerWrapper">
+          <div className="spellName">{spellName}</div>
+          <div className="playerBody" />
           <div className="statsContainer">
-            <p>{playerOne.health}</p>
-            <p>{playerOne.shield}</p>
-            <p>{playerOne.fireShield}</p>
-            <p>{playerOne.waterShield}</p>
-            <p>{playerOne.earthShield}</p>
-            <p>{playerOne.windShield}</p>
+            <p>{playerOne.health} <span>HP</span> </p>
+            <p>{playerOne.shield} <span>SH</span></p>
+            <p>{playerOne.fireShield} <span>FS</span></p>
+            <p>{playerOne.waterShield} <span>WS</span></p>
+            <p>{playerOne.earthShield} <span>HS</span></p>
+            <p>{playerOne.windShield} <span>WS</span></p>
           </div>
         </div>
         <div className="enemyWrapper">
+          <div className="spellName">aie</div>
+          <div className="playerBody" />
           <div className="statsContainer">
-            <p>{playerTwo.health}</p>
-            <p>{playerTwo.shield}</p>
-            <p>{playerTwo.fireShield}</p>
-            <p>{playerTwo.waterShield}</p>
-            <p>{playerTwo.earthShield}</p>
-            <p>{playerTwo.windShield}</p>
+            <p>{playerTwo.health} <span>HP</span> </p>
+            <p>{playerTwo.shield} <span>SH</span></p>
+            <p>{playerTwo.fireShield} <span>FS</span></p>
+            <p>{playerTwo.waterShield} <span>WS</span></p>
+            <p>{playerTwo.earthShield} <span>HS</span></p>
+            <p>{playerTwo.windShield} <span>WS</span></p>
           </div>
         </div>
       </main>
