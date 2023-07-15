@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useEffect, useState, useCallback } from "react";
 import { player, enemy, spellList, element } from '../datas/spellList';
 import SpellCard from '../components/spellCard'
+import Header from '../components/header';
 
 export default function spellBook() {
 
@@ -44,6 +45,7 @@ export default function spellBook() {
         <meta name="description" content="Jeu de duel de magicien - Youpi" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
 
       <main className='spellBookContainer'>
         <div className="filters">

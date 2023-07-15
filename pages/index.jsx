@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div>
+    <div className='wrapperGlobal'>
       <Head>
         <title>Magician Duel</title>
         <meta name="description" content="Jeu de duel de magicien - Youpi" />

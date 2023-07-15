@@ -5,6 +5,7 @@ import Player from '../components/player'
 import { useEffect, useState, useCallback } from "react";
 import Enemy from '../components/enemy';
 import { player, enemy, spellList, element } from '../datas/spellList';
+import Header from '../components/header';
 
 // Type d'utilisation styled
 const FightSceneContainer = styled.div`
@@ -80,6 +81,7 @@ export default function FightScene() {
         <meta name="description" content="Jeu de duel de magicien - Youpi" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
 
       {/* <FightSceneContainer> */}
       <main className='fightSceneContainer'>
