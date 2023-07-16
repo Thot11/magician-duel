@@ -1,11 +1,9 @@
 import Link from "next/dist/client/link";
 import { useEffect, useState, useCallback } from "react";
 
-
-const Header = () => {
-
+function Header() {
   return (
-    <div className={`header`}>
+    <div className="header">
       <Link href="/">
         <a>
           <button>Home</button>
@@ -13,6 +11,6 @@ const Header = () => {
       </Link>
     </div>
   );
-};
+}
 
 export default Header;

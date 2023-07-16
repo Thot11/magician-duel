@@ -1,45 +1,45 @@
 const spellList = {
   fireball: {
-    name: 'fireball',
-    type: 'attack',
+    name: "fireball",
+    type: "attack",
     damage: 6,
     shield: 0,
     elementalShield: 0,
-    attribut: 'fire',
+    attribut: "fire",
   },
   firewall: {
-    name: 'firewall',
-    type: 'defense',
+    name: "firewall",
+    type: "defense",
     damage: 0,
     shield: 3,
     elementalShield: 3,
-    attribut: 'fire',
+    attribut: "fire",
   },
   waterwave: {
-    name: 'waterwave',
-    type: 'attack',
+    name: "waterwave",
+    type: "attack",
     damage: 6,
     shield: 0,
     elementalShield: 0,
-    attribut: 'water',
+    attribut: "water",
   },
   earthwave: {
-    name: 'earthwave',
-    type: 'attack',
+    name: "earthwave",
+    type: "attack",
     damage: 6,
     shield: 0,
     elementalShield: 0,
-    attribut: 'earth',
+    attribut: "earth",
   },
   windslash: {
-    name: 'windslash',
-    type: 'attack',
+    name: "windslash",
+    type: "attack",
     damage: 6,
     shield: 0,
     elementalShield: 0,
-    attribut: 'wind',
-  }
-}
+    attribut: "wind",
+  },
+};
 
 const player = {
   health: 50,
@@ -49,7 +49,7 @@ const player = {
   windShield: 0,
   earthShield: 0,
   spellBook: spellList,
-}
+};
 const enemy = {
   health: 50,
   shield: 50,
@@ -58,26 +58,25 @@ const enemy = {
   windShield: 0,
   earthShield: 0,
   spellBook: spellList,
-}
+};
 
 const element = {
   fire: {
-    weakness: 'earth',
-    strongness: 'water',
+    weakness: "earth",
+    strongness: "water",
   },
   water: {
-    weakness: 'fire',
-    strongness: 'earth',
+    weakness: "fire",
+    strongness: "earth",
   },
   earth: {
-    weakness: 'water',
-    strongness: 'fire',
+    weakness: "water",
+    strongness: "fire",
   },
   wind: {
-    weakness: 'fire',
-    strongness: 'water',
+    weakness: "fire",
+    strongness: "water",
   },
-}
-
+};
 
 export { spellList, player, element, enemy };
