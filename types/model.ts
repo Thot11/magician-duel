@@ -30,6 +30,14 @@ export enum Attributes {
   PHYSICAL = 'physical'
 }
 
+export const attributeColors: { [key in Attributes]: string } = {
+  [Attributes.FIRE]: "#FF4500", // orange-rougeâtre pour le feu
+  [Attributes.WATER]: "#1E90FF", // bleu clair pour l'eau
+  [Attributes.EARTH]: "#8B4513", // brun-terre pour la terre
+  [Attributes.WIND]: "#ADD8E6", // gris léger pour le vent
+  [Attributes.PHYSICAL]: "#696969" // gris foncé pour le physique
+};
+
 // CONST 
 
 export const allSpells: string[] = [
