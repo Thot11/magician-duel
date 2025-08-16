@@ -1,12 +1,13 @@
-import { PlayersType, Spells } from "./model";
+import { GameState, Spells, Player } from "./model";
 
 export interface ServerToClientEvents {
-  spellSent: (players: PlayersType) => void;
-  roomJoined: (players: PlayersType) => void;
-  roomUpdated: (players: PlayersType) => void;
+  status: (data: { message: string }) => void;
+  gameStarted: (data: GameState) => void;
+  gameStateUpdate: (data: { players: Player[] }) => void;
+  gameOver: (data: { winner: string }) => void;
+  opponentDisconnected: () => void;
 }
 
 export interface ClientToServerEvents {
-  spellSend: (spell: string, callback: (response: any) => void) => void;
-  joinRoom: (params: { roomName: string, username: string }, callback: (response: { myID: string }) => void) => void;
+  castSpell: (payload: { spell: Spells }, callback: (response: { status: string }) => void) => void;
 }

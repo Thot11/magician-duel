@@ -1,59 +1,44 @@
-import { useEffect, useState, useCallback } from "react";
-import { PlayerStatsType } from "../types/model";
+import { Player as PlayerType, Attributes } from "../types/model";
 import styled from "styled-components";
+import HealthBar from "./HealthBar";
 
 const PlayerContainer = styled.div`
   display: flex;
   flex-direction: column;
   color: white;
-`
+  width: 150px;
+  align-items: center;
+`;
 
 const StatLine = styled.div`
-  font-size: 13px;
-`
-
-const Suffix = styled.span``
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: bold;
+  height: 20px;
+  text-align: center;
+`;
 
 type PlayerProps = {
-  player: PlayerStatsType
-}
+  player: PlayerType;
+};
 
 const Player = ({ player }: PlayerProps) => {
-  const {
-    health,
-    shields } = player;
+  const { hp, shields } = player;
 
-  const {
-    fire,
-    water,
-    wind,
-    earth,
-    physical } = shields
+  const shieldText = Object.entries(shields || {})
+    .filter(([, value]) => value > 0)
+    .map(([type, value]) => `+${value} ${type}`)
+    .join(' ');
 
-  // TODO améliorer le return
   return (
     <PlayerContainer>
+      <HealthBar player={player} />
       <StatLine>
-        {health} <Suffix>HP</Suffix>
+        {hp} HP {shieldText}
       </StatLine>
-      <StatLine>
-        {physical} <Suffix>Shield</Suffix>
-      </StatLine>
-      <StatLine>
-        {fire} <Suffix>Fire Shield</Suffix>
-      </StatLine>
-      <StatLine>
-        {water} <Suffix>Water Shield</Suffix>
-      </StatLine>
-      <StatLine>
-        {earth} <Suffix>Earth Shield</Suffix>
-      </StatLine>
-      <StatLine>
-        {wind} <Suffix>Wind Shield</Suffix>
-      </StatLine>
-
     </PlayerContainer>
   );
-}
+};
 
 export default Player;
+

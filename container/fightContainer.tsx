@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { PlayerType, Spells, allSpells, SpellStatus } from "../types/model";
+import { useEffect, useState, useCallback } from "react";
+import { Spells, allSpells, SpellStatus } from "../types/model";
 import styled from "styled-components";
 import Playground from "../components/playground";
 import useFightSocket from "../hooks/useFightSocket";
@@ -14,21 +14,17 @@ const WaitingPlayers = styled.div`
   color: white;
 `
 
-const PlayerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-type FightContainerType = {
-  roomName: string
-}
-
 const LOCKED_TIMER = 500
 
+const FightContainer = () => {
+  const [username, setUsername] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername || 'Anonymous');
+  }, []);
 
-const FightContainer = ({ roomName }: FightContainerType) => {
-  const username = useMemo(() => localStorage.getItem("username"), [])
-  const { players, startAt, myID, sendSpell } = useFightSocket({ pseudo: username || '', roomName })
+  const { players, myID, winner, status, sendSpell } = useFightSocket({ pseudo: username || 'Anonymous' })
 
   const [spellName, setSpellName] = useState<string | Spells>('');
   const [spellStatus, setSpellStatus] = useState<SpellStatus>(SpellStatus.CHANNELING)
@@ -43,27 +39,23 @@ const FightContainer = ({ roomName }: FightContainerType) => {
     }, LOCKED_TIMER)
   }
 
-
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      if (startAt || (true && !lockSpell)) {
-        // const isFightStarted = Date.now() - startAt;
-        // if (isFightStarted < 0) {
-        //   return;
-        // }
+      if (players && !winner) {
+        if (lockSpell) {
+          return;
+        }
 
         if (e.key.length === 1) {
           setSpellName((prevState) => prevState + e.key);
         }
 
         if (e.key === "Enter") {
-          if (allSpells.includes(spellName)) {
-            console.log('test1')
-            sendSpell(spellName).then(() => {
+          if (allSpells.includes(spellName as Spells)) {
+            sendSpell(spellName as Spells).then(() => {
               setSpellStatus(SpellStatus.SENT)
               clearSpell()
-            }).catch((error) => {
-              console.log('osecour', error)
+            }).catch(() => {
               setSpellStatus(SpellStatus.MISSED)
               clearSpell()
             })
@@ -74,7 +66,7 @@ const FightContainer = ({ roomName }: FightContainerType) => {
         }
       }
     },
-    [spellName, roomName],
+    [spellName, lockSpell, players, winner, sendSpell],
   );
 
   useEffect(() => {
@@ -85,12 +77,21 @@ const FightContainer = ({ roomName }: FightContainerType) => {
     };
   }, [handleKeyPress]);
 
+  if (!username) {
+    return <WaitingPlayers>Loading user...</WaitingPlayers>;
+  }
+
+  if (winner) {
+    const winnerPlayer = players?.find(p => p.id === winner);
+    return <WaitingPlayers>{winnerPlayer ? `${winnerPlayer.pseudo} won!` : 'Game Over'}</WaitingPlayers>
+  }
+
   return (
     <FightMainContainer>
-      {players && myID && Object.keys(players).length > 1 ? (
+      {players && myID ? (
         <Playground players={players} myID={myID} spellName={spellName} spellStatus={spellStatus} />
       ) : (
-        <WaitingPlayers>Waiting players... </WaitingPlayers>
+        <WaitingPlayers>{status || 'Connecting...'}</WaitingPlayers>
       )}
     </FightMainContainer>
   );

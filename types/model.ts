@@ -79,6 +79,14 @@ export const element: ElementMap = {
   }
 };
 
+export const shieldOrder: Attributes[] = [Attributes.FIRE, Attributes.WATER, Attributes.EARTH, Attributes.WIND, Attributes.PHYSICAL];
+
+export const healthColors = {
+  high: '#4CAF50',
+  medium: '#FFC107',
+  low: '#F44336',
+};
+
 // TYPES
 
 type ElementMap = {
@@ -99,22 +107,17 @@ export type Spell = {
   attribut: Attributes
 }
 
-export type PlayerStatsType = {
-  health: number,
-  shields: Record<Attributes, number>
-}
+export type Player = {
+  id: string;
+  hp: number;
+  pseudo: string;
+  shields: Partial<Record<Attributes, number>>;
+  lastSpell?: Spells | null;
+};
 
-export type PlayerType = {
-  playerStats: PlayerStatsType,
-  lastSpell: Spells | null,
-  username: string,
-  socketId: string
-}
+export type PlayersType = Player[];
 
-export type PlayersType = {
-  [key: string]: PlayerType
-}
-
-export type RoomsType = {
-  [key: string]: PlayersType
-}
+export type GameState = {
+  gameId: string;
+  players: Player[];
+};

@@ -1,12 +1,8 @@
 import Head from "next/head";
 import styled from "styled-components";
-import React, { useEffect, useState, useCallback, useRef } from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import Player from "../components/player";
-// import Enemy from "../components/enemy";
+import React from "react";
 import Header from "../components/header";
 import FightContainer from "../container/fightContainer";
-import SelectRoomName from "../components/selectRoomName";
 
 
 const FightSceneContainer = styled.div`
@@ -20,18 +16,17 @@ const FightSceneContainer = styled.div`
 `;
 
 const FightScene = () => {
-  const [roomName, setRoomName] = useState("");
-
-  const validateRoomName = (roomName: string) => {
-    setRoomName(roomName)
-  }
-
   return (
     <div>
+      <Head>
+        <title>MD - Playground</title>
+        <meta name="description" content="Jeu de duel de magicien" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
 
       <FightSceneContainer>
-        {roomName ? (<FightContainer roomName={roomName} />) : (<SelectRoomName validate={validateRoomName} />)}
+        <FightContainer />
       </FightSceneContainer>
     </div>
   );

@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
-import { Attributes, PlayerType, PlayersType, SpellStatus, Spells, attributeColors } from "../types/model";
+import { useEffect, useState } from "react";
+import { Attributes, Player, PlayersType, SpellStatus, Spells, attributeColors } from "../types/model";
 import styled, { keyframes } from "styled-components";
-import Player from "./player";
+import PlayerComponent from "./player";
 import { SPELLS_LIST } from "../datas/spellList";
 
 const PlaygroundContainer = styled.div`
@@ -21,18 +21,19 @@ const PlayersWrapper = styled.div`
 
 const FightScene = styled.div`
   background-image: url('/background.png');
-  background-position: center; // Centrer l'image dans le conteneur
-  background-repeat: no-repeat; // Empêcher la répétition de l'image
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: contain;
   width: 714px;
   height: 335px;
   position: relative;
 `
 
-const PlayerContainer = styled.div`
+const PlayerInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  align-items: center;
 `
 
 const PlayerName = styled.div`
@@ -43,6 +44,7 @@ const PlayerName = styled.div`
 const PlayerLastSpell = styled.div`
   font-style: italic;
   margin-bottom: 10px;
+  height: 20px;
 `
 
 type CurrentSpellType = {
@@ -51,38 +53,14 @@ type CurrentSpellType = {
 }
 
 const bounceAnimation = keyframes`
-  0% {
-    transform: translateX(0px);
-    timing-function: ease-in;
-  }
-  37% {
-    transform: translateX(5px);
-    timing-function: ease-out;
-  }
-  55% {
-    transform: translateX(-5px);
-    timing-function: ease-in;
-  }
-  73% {
-    transform: translateX(4px);
-    timing-function: ease-out;
-  }
-  82% {
-    transform: translateX(-4px);
-    timing-function: ease-in;
-  }
-  91% {
-    transform: translateX(2px);
-    timing-function: ease-out;
-  }
-  96% {
-    transform: translateX(-2px);
-    timing-function: ease-in;
-  }
-  100% {
-    transform: translateX(0px);
-    timing-function: ease-in;
-  }
+  0% { transform: translateX(0px); }
+  37% { transform: translateX(5px); }
+  55% { transform: translateX(-5px); }
+  73% { transform: translateX(4px); }
+  82% { transform: translateX(-4px); }
+  91% { transform: translateX(2px); }
+  96% { transform: translateX(-2px); }
+  100% { transform: translateX(0px); }
 `;
 
 const CurrentSpell = styled.div<CurrentSpellType>`
@@ -91,9 +69,8 @@ const CurrentSpell = styled.div<CurrentSpellType>`
   text-align: center;
   width: fit-content;
   color: ${props => props.$spellStatus};
-
-  animation-name: ${(props => props.$bounce && bounceAnimation)};
-  animation-duration: 0.3s;
+  animation: ${props => props.$bounce ? bounceAnimation : 'none'} 0.3s ease-in-out;
+  height: 20px;
 `
 
 const getPosition = (me?: boolean) => {
@@ -118,7 +95,6 @@ type MagicianType = {
 const MagicianContainer = styled.div<MagicianType>`
   position: absolute;
   height: 90px;
-
   ${(props) => getPosition(props.$me)}
 `
 
@@ -139,14 +115,14 @@ const MagicianEffect = styled.div<MagicianEffectType>`
   transition: box-shadow 0.2s ease;
 `
 
-const getElementFromSpellName = (spellName: Spells | null) => {
+const getElementFromSpellName = (spellName: Spells | null | undefined) => {
   if (!spellName) {
     return Attributes.FIRE
   }
   return SPELLS_LIST[spellName].attribut
 }
 
-const getMySpellColor = (spellStatus: SpellStatus, lastSpell: Spells | null) => {
+const getMySpellColor = (spellStatus: SpellStatus, lastSpell: Spells | null | undefined) => {
   if (spellStatus === SpellStatus.CHANNELING) {
     return 'white'
   } else if (spellStatus === SpellStatus.MISSED) {
@@ -155,7 +131,6 @@ const getMySpellColor = (spellStatus: SpellStatus, lastSpell: Spells | null) => 
     return attributeColors[getElementFromSpellName(lastSpell)]
   }
 }
-
 type PlaygroundProps = {
   players: PlayersType
   myID: string
@@ -166,22 +141,8 @@ type PlaygroundProps = {
 const Playground = ({ players, myID, spellName, spellStatus }: PlaygroundProps) => {
   const [isBouncing, setIsBouncing] = useState<boolean>(false)
 
-  const sortByMyIDFirst = () => (playerA: PlayerType, playerB: PlayerType) => {
-    if (playerA.socketId === myID) {
-      return -1;
-    } else if (playerB.socketId === myID) {
-      return 1;
-    } else {
-      return 0;
-    }
-  };
-
-  const removeMyID = () => (player: PlayerType) => {
-    if (player.socketId === myID) {
-      return false;
-    }
-    return true
-  };
+  const me = players.find(p => p.id === myID);
+  const opponent = players.find(p => p.id !== myID);
 
   useEffect(() => {
     if (spellStatus === SpellStatus.MISSED) {
@@ -189,34 +150,35 @@ const Playground = ({ players, myID, spellName, spellStatus }: PlaygroundProps) 
     }
   }, [spellStatus])
 
+  if (!me || !opponent) {
+    return <div>Waiting for player data...</div>;
+  }
+
   return (
     <PlaygroundContainer>
-      <CurrentSpell onAnimationEnd={() => setIsBouncing(false)} $bounce={isBouncing} $spellStatus={spellStatus}>Spell en cours (ne le ratez pas): {spellName}</CurrentSpell>
+      <CurrentSpell onAnimationEnd={() => setIsBouncing(false)} $bounce={isBouncing} $spellStatus={spellStatus}>
+        {spellName ? `Spell: ${spellName}` : ''}
+      </CurrentSpell>
       <FightScene>
         <MagicianContainer $me>
           <Magician src={'/magician.png'} />
-          <MagicianEffect $color={getMySpellColor(spellStatus, players[myID].lastSpell)} />
+          <MagicianEffect $color={getMySpellColor(spellStatus, me.lastSpell)} />
         </MagicianContainer>
-        {Object.values(players).filter(removeMyID()).map((player, index) => {
-          return (
-            <MagicianContainer key={index}>
-              <Magician src={'/magician.png'} />
-              <MagicianEffect $color={attributeColors[getElementFromSpellName(player.lastSpell)]} />
-            </MagicianContainer>
-          )
-        })}
+        <MagicianContainer>
+          <Magician src={'/magician.png'} />
+          <MagicianEffect $color={attributeColors[getElementFromSpellName(opponent.lastSpell)]} />
+        </MagicianContainer>
       </FightScene>
       <PlayersWrapper>
-        {Object.values(players).sort(sortByMyIDFirst()).map((player, index) => {
+        {[me, opponent].map((player) => {
           return (
-            <PlayerContainer key={index}>
-              <PlayerName>{player.username}</PlayerName>
-              <PlayerLastSpell>Dernier spell: {player.lastSpell}</PlayerLastSpell>
-              <Player player={player.playerStats} />
-            </PlayerContainer>
+            <PlayerInfoContainer key={player.id}>
+              <PlayerName>{player.pseudo}</PlayerName>
+              <PlayerLastSpell>Last spell: {player.lastSpell || 'none'}</PlayerLastSpell>
+              <PlayerComponent player={player} />
+            </PlayerInfoContainer>
           )
         })}
-
       </PlayersWrapper>
     </PlaygroundContainer>
   );

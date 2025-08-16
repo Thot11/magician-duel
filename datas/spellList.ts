@@ -5,13 +5,13 @@ type SpellsListType = {
 };
 
 export const SPELLS_LIST: SpellsListType = {
-  fireball: {
+  [Spells.FIREBALL]: {
     name: Spells.FIREBALL,
     type: SpellTypes.ATTACK,
     damage: 6,
     attribut: Attributes.FIRE,
   },
-  firewall: {
+  [Spells.FIREWALL]: {
     name: Spells.FIREWALL,
     type: SpellTypes.DEFENSE,
     damage: 0,
@@ -24,13 +24,13 @@ export const SPELLS_LIST: SpellsListType = {
     },
     attribut: Attributes.FIRE,
   },
-  waterwave: {
+  [Spells.WATERWAVE]: {
     name: Spells.WATERWAVE,
     type: SpellTypes.ATTACK,
     damage: 6,
     attribut: Attributes.WATER,
   },
-  waterwall: {
+  [Spells.WATERWALL]: {
     name: Spells.WATERWALL,
     type: SpellTypes.DEFENSE,
     damage: 0,
@@ -43,13 +43,13 @@ export const SPELLS_LIST: SpellsListType = {
     },
     attribut: Attributes.WATER,
   },
-  earthquake: {
+  [Spells.EARTHQUAKE]: {
     name: Spells.EARTHQUAKE,
     type: SpellTypes.ATTACK,
     damage: 6,
     attribut: Attributes.EARTH,
   },
-  earthwall: {
+  [Spells.EARTHWALL]: {
     name: Spells.EARTHWALL,
     type: SpellTypes.DEFENSE,
     damage: 0,
@@ -62,13 +62,13 @@ export const SPELLS_LIST: SpellsListType = {
     },
     attribut: Attributes.EARTH,
   },
-  windstrike: {
+  [Spells.WINDSTRIKE]: {
     name: Spells.WINDSTRIKE,
     type: SpellTypes.ATTACK,
     damage: 6,
     attribut: Attributes.WIND,
   },
-  windwall: {
+  [Spells.WINDWALL]: {
     name: Spells.WINDWALL,
     type: SpellTypes.DEFENSE,
     damage: 0,
