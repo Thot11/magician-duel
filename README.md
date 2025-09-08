@@ -26,6 +26,6 @@ Le jeu repose sur trois pilier:
 
 ## Les sorts
 
-- Les sorts existent dans 4 éléments: feu, eau, terre et vent 
+- Les sorts existent dans 4 éléments: feu, eau, terre et vent
 - Il en existe 4 genres: attaque, défense, buff et débuff
 - Chaque élément est + ou - efficace contre chaque élément feu > eau, terre > feu, etc

@@ -118,7 +118,7 @@ q {
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     content: none;
   }
 }
@@ -160,24 +160,24 @@ select {
   outline: none;
 }
 
-input[type=text],
-input[type=reset],
-input[type=password],
-input[type=search],
-input[type=email],
-input[type=tel],
-input[type=url],
-input[type=time],
-input[type=week],
-input[type=month],
-input[type=date],
-input[type=datetime],
-input[type=datetime-local],
-input[type=number],
-input[type=submit],
-input[type=reset],
-input[type=color],
-input[type=file],
+input[type='text'],
+input[type='reset'],
+input[type='password'],
+input[type='search'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
+input[type='time'],
+input[type='week'],
+input[type='month'],
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='number'],
+input[type='submit'],
+input[type='reset'],
+input[type='color'],
+input[type='file'],
 button,
 textarea,
 select {
@@ -186,7 +186,7 @@ select {
   appearance: none;
 }
 
-input[type=color] {
+input[type='color'] {
   width: 1em;
 }
 

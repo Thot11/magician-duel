@@ -1,9 +1,10 @@
-import Head from "next/head";
-import Link from "next/link";
-import styled from "styled-components";
+import Head from 'next/head'
+import Link from 'next/link'
+import styled from 'styled-components'
+import { useAuth } from '../context/AuthContext'
 
 // components
-import Header from "../components/header";
+import Header from '../components/header'
 
 const MainContainer = styled.main`
   display: flex;
@@ -11,7 +12,7 @@ const MainContainer = styled.main`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, #050022 0%, #0A0047 100%);
+  background: linear-gradient(180deg, #050022 0%, #0a0047 100%);
 `
 
 const Menu = styled.div`
@@ -32,15 +33,24 @@ const GoTo = styled.div`
   border-radius: 5px;
   cursor: pointer;
   color: white;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Légère transparence blanche au survol */
+    background-color: rgba(
+      255,
+      255,
+      255,
+      0.1
+    ); /* Légère transparence blanche au survol */
     transform: scale(1.05); /* Léger agrandissement au survol */
   }
 `
 
 export default function Home() {
+  const { isAuthenticated } = useAuth()
+
   return (
     <div className="wrapperGlobal">
       <Head>
@@ -52,16 +62,24 @@ export default function Home() {
       <MainContainer>
         <Header />
         <Menu>
-          <Link href="/fightScene">
-            <GoTo>Duel</GoTo>
-          </Link>
-          <Link href="/spellBook">
-            <GoTo>Grimoire</GoTo>
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link href="/fightScene">
+                <GoTo>Duel</GoTo>
+              </Link>
+              <Link href="/spellBook">
+                <GoTo>Grimoire</GoTo>
+              </Link>
+            </>
+          ) : (
+            <Link href="/login">
+              <GoTo>Login</GoTo>
+            </Link>
+          )}
         </Menu>
       </MainContainer>
 
       <footer />
     </div>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import { Player as PlayerType, Attributes } from "../types/model";
-import styled from "styled-components";
-import HealthBar from "./HealthBar";
+import styled from 'styled-components'
+import { Player as PlayerType } from '../types/model'
+import HealthBar from './HealthBar'
 
 const PlayerContainer = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ const PlayerContainer = styled.div`
   color: white;
   width: 150px;
   align-items: center;
-`;
+`
 
 const StatLine = styled.div`
   font-size: 14px;
@@ -16,19 +16,19 @@ const StatLine = styled.div`
   font-weight: bold;
   height: 20px;
   text-align: center;
-`;
+`
 
 type PlayerProps = {
-  player: PlayerType;
-};
+  player: PlayerType
+}
 
-const Player = ({ player }: PlayerProps) => {
-  const { hp, shields } = player;
+function Player({ player }: PlayerProps) {
+  const { hp, shields } = player
 
   const shieldText = Object.entries(shields || {})
     .filter(([, value]) => value > 0)
     .map(([type, value]) => `+${value} ${type}`)
-    .join(' ');
+    .join(' ')
 
   return (
     <PlayerContainer>
@@ -37,8 +37,7 @@ const Player = ({ player }: PlayerProps) => {
         {hp} HP {shieldText}
       </StatLine>
     </PlayerContainer>
-  );
-};
+  )
+}
 
-export default Player;
-
+export default Player

@@ -9,20 +9,35 @@
     "plugin:react/recommended",
     "airbnb",
     "plugin:prettier/recommended",
-    "prettier"
-    ],
-    "parserOptions": {
-      "ecmaFeatures": {
-          "jsx": true,
-          "tsx": true,
-          "ts"
-      },
-      "ecmaVersion": 12
+    "prettier",
+    "next/core-web-vitals"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "tsx": true
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
+    "ecmaVersion": 12
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "consistent-return": "off",
+    "no-console": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-    "rules": {
-    }
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  }
 }

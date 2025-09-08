@@ -1,5 +1,10 @@
-import styled from "styled-components";
-import { Player as PlayerType, attributeColors, shieldOrder, healthColors } from "../types/model";
+import styled from 'styled-components'
+import {
+  Player as PlayerType,
+  attributeColors,
+  shieldOrder,
+  healthColors,
+} from '../types/model'
 
 const BarContainer = styled.div`
   width: 100%;
@@ -10,13 +15,13 @@ const BarContainer = styled.div`
   border: 1px solid #555;
   position: relative;
   display: flex;
-`;
+`
 
 type BarSegmentProps = {
-  $width: number;
-  $color: string;
-  $value: number;
-};
+  $width: number
+  $color: string
+  $value: number
+}
 
 const BarSegment = styled.div<BarSegmentProps>`
   height: 100%;
@@ -35,42 +40,51 @@ const BarSegment = styled.div<BarSegmentProps>`
     background-image: repeating-linear-gradient(
       to right,
       transparent,
-      transparent calc(100% / (${props => props.$value} / 10) - 1px),
-      rgba(0, 0, 0, 0.3) calc(100% / (${props => props.$value} / 10) - 1px),
-      rgba(0, 0, 0, 0.3) calc(100% / (${props => props.$value} / 10))
+      transparent calc(100% / (${(props) => props.$value} / 10) - 1px),
+      rgba(0, 0, 0, 0.3) calc(100% / (${(props) => props.$value} / 10) - 1px),
+      rgba(0, 0, 0, 0.3) calc(100% / (${(props) => props.$value} / 10))
     );
-    display: ${props => props.$value > 10 ? 'block' : 'none'};
+    display: ${(props) => (props.$value > 10 ? 'block' : 'none')};
   }
-`;
+`
 
 type HealthBarProps = {
-  player: PlayerType;
-};
+  player: PlayerType
+}
 
-const HealthBar = ({ player }: HealthBarProps) => {
-  const { hp, shields } = player;
+function HealthBar({ player }: HealthBarProps) {
+  const { hp, shields } = player
 
-  const totalShields = Object.values(shields || {}).reduce((sum, value) => sum + value, 0);
-  const totalEffectiveHealth = hp + totalShields;
+  const totalShields = Object.values(shields || {}).reduce(
+    (sum, value) => sum + value,
+    0,
+  )
+  const totalEffectiveHealth = hp + totalShields
 
   if (totalEffectiveHealth === 0) {
-    return <BarContainer />;
+    return <BarContainer />
   }
 
-  const hpWidth = (hp / totalEffectiveHealth) * 100;
-  const hpColor = hp > 50 ? healthColors.high : hp > 20 ? healthColors.medium : healthColors.low;
+  const hpWidth = (hp / totalEffectiveHealth) * 100
+  const getHpColor = (currentHp: number) => {
+    if (currentHp > 50) {
+      return healthColors.high
+    }
+    if (currentHp > 20) {
+      return healthColors.medium
+    }
+    return healthColors.low
+  }
+
+  const hpColor = getHpColor(hp)
 
   return (
     <BarContainer>
-      <BarSegment
-        $width={hpWidth}
-        $color={hpColor}
-        $value={hp}
-      />
+      <BarSegment $width={hpWidth} $color={hpColor} $value={hp} />
       {shieldOrder.map((shieldType) => {
-        const shieldValue = shields?.[shieldType];
+        const shieldValue = shields?.[shieldType]
         if (shieldValue && shieldValue > 0) {
-          const shieldWidth = (shieldValue / totalEffectiveHealth) * 100;
+          const shieldWidth = (shieldValue / totalEffectiveHealth) * 100
           return (
             <BarSegment
               key={shieldType}
@@ -78,12 +92,12 @@ const HealthBar = ({ player }: HealthBarProps) => {
               $color={attributeColors[shieldType]}
               $value={shieldValue}
             />
-          );
+          )
         }
-        return null;
+        return null
       })}
     </BarContainer>
-  );
-};
+  )
+}
 
-export default HealthBar;
+export default HealthBar

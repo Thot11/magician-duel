@@ -1,8 +1,8 @@
-import { Attributes, Spell, SpellTypes, Spells } from "../types/model";
+import { Attributes, Spell, SpellTypes, Spells } from '../types/model'
 
 type SpellsListType = {
-  [key in Spells]: Spell;
-};
+  [key in Spells]: Spell
+}
 
 export const SPELLS_LIST: SpellsListType = {
   [Spells.FIREBALL]: {
@@ -81,5 +81,4 @@ export const SPELLS_LIST: SpellsListType = {
     },
     attribut: Attributes.WIND,
   },
-};
-
+}

@@ -1,20 +1,27 @@
 import { styled } from 'styled-components'
-import Link from "next/dist/client/link";
-import { useEffect, useState, useCallback, useRef, ChangeEvent } from "react";
+import Link from 'next/link'
+import { useAuth } from '../context/AuthContext'
 
 const HeaderContainer = styled.div`
-  background-color: #4CAF50; /* Vert */
+  background-color: #4caf50; /* Vert */
   padding: 15px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: absolute;
   top: 0;
   width: 100%;
-  height 40px:
+  height: 40px;
 `
 
 const LeftBlock = styled.div`
- display: inline-flex;
+  display: inline-flex;
+`
+
+const RightBlock = styled.div`
+  display: flex;
+  align-items: center;
+  color: white;
 `
 
 const StyledLink = styled.div`
@@ -25,32 +32,33 @@ const StyledLink = styled.div`
   padding: 8px 12px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: #45a049; /* Vert plus foncé au survol */
   }
 `
 
-const Pseudo = styled.input`
-  color: white;
-  border: 1px solid white;
-  border-radius: 12px;
-  padding: 10px 8px;
+const UserInfo = styled.span`
+  margin-right: 15px;
 `
 
+const LogoutButton = styled.button`
+  background: none;
+  border: 1px solid white;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-const Header = () => {
-  const [username, setUsername] = useState<string>('')
-
-  const handleUserName = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-    localStorage.setItem('username', event.target.value);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
+`
 
-  useEffect(() => {
-    const username = localStorage.getItem("username")
-    setUsername(username || '')
-  }, [])
+function Header() {
+  const { isAuthenticated, user, logout } = useAuth()
 
   return (
     <HeaderContainer>
@@ -58,15 +66,31 @@ const Header = () => {
         <Link href="/">
           <StyledLink>Home</StyledLink>
         </Link>
-        <Link href="/fightScene">
-          <StyledLink>Duel</StyledLink>
-        </Link>
-        <Link href="/spellBook">
-          <StyledLink>Grimoire</StyledLink>
-        </Link>
+        {isAuthenticated && (
+          <>
+            <Link href="/fightScene">
+              <StyledLink>Duel</StyledLink>
+            </Link>
+            <Link href="/spellBook">
+              <StyledLink>Grimoire</StyledLink>
+            </Link>
+          </>
+        )}
       </LeftBlock>
-      <Pseudo value={username} onChange={(e) => handleUserName(e)} placeholder={'ton pseudo ici'} />
+      <RightBlock>
+        {isAuthenticated && user ? (
+          <>
+            <UserInfo>{user.pseudo}</UserInfo>
+            <LogoutButton onClick={logout}>Logout</LogoutButton>
+          </>
+        ) : (
+          <Link href="/login">
+            <StyledLink>Login</StyledLink>
+          </Link>
+        )}
+      </RightBlock>
     </HeaderContainer>
-  );
+  )
 }
-export default Header;
+
+export default Header

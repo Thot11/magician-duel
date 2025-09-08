@@ -1,40 +1,43 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react'
+import styled from 'styled-components'
 
 type TimerProps = {
-  targetTimestamp: number;
-};
+  targetTimestamp: number
+}
 
-const StyledTimer = styled.div`
-`;
+const StyledTimer = styled.div``
 
-const Timer = ({ targetTimestamp }: TimerProps) => {
-  const calculateTimeLeft = () => (targetTimestamp - Date.now()) / 1000;
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
+function Timer({ targetTimestamp }: TimerProps) {
+  const calculateTimeLeft = () => (targetTimestamp - Date.now()) / 1000
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft)
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      return;
+      return
     }
 
     const timer = setInterval(() => {
-      const newTimeLeft = calculateTimeLeft();
+      const newTimeLeft = calculateTimeLeft()
       if (newTimeLeft <= 0) {
-        clearInterval(timer);
-        setTimeLeft(0);
+        clearInterval(timer)
+        setTimeLeft(0)
       } else {
-        setTimeLeft(newTimeLeft);
+        setTimeLeft(newTimeLeft)
       }
-    }, 1000);
+    }, 1000)
 
-    return () => clearInterval(timer);
-  }, [targetTimestamp]);
+    return () => {
+      clearInterval(timer)
+    }
+  }, [calculateTimeLeft, timeLeft, targetTimestamp])
 
   if (timeLeft <= 0) {
-    return null;
+    return null
   }
 
-  return <StyledTimer>Début du combat dans: {Math.round(timeLeft)}s</StyledTimer>;
-};
+  return (
+    <StyledTimer>Début du combat dans: {Math.round(timeLeft)}s</StyledTimer>
+  )
+}
 
 export default Timer
